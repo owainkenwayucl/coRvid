@@ -1,5 +1,5 @@
 FPC=fpc
-FPARGS=-Mobjfpc
+FPARGS=-Mobjfpc 
 
 coRvid.exe: coRvid.pas Simulation.pas Makefile
 	$(FPC) $(FPARGS) -ocoRvid.exe coRvid.pas

@@ -4,14 +4,18 @@ uses
    Simulation;
 
 var
-   sim1,sim2: SimulationDetails;
+   sim: SimulationDetails;
+   inputfile: ansistring;
 
 begin
-   sim1 := readSimulationDetails('../input/uk-sim-initial.ini');
-   sim2 := readSimulationDetails('../input/uk-sim.ini');
+   if ParamCount > 0 then
+   begin
+      inputfile := ParamStr(1);
+      sim := readSimulationDetails(inputfile);
 
-   WriteLn('Sim1:');
-   writeSimulationDetails(sim1);
-   WriteLn('Sim2:');
-   writeSimulationDetails(sim2);
+      writeSimulationDetails(sim);
+      runSimulation(sim);
+   end
+   else
+     WriteLn('[./]coRvid.exe <inifile>');
 end.
