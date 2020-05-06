@@ -20,9 +20,10 @@ type
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
-function generateCommandLine(const sim: SimulationDetails): string;
+function generateCommandLine(const sim: SimulationDetails; const binary: boolean): ansistring;
 
 procedure writeSimulationDetails(const sim: SimulationDetails);
+procedure runSimulation(const sim: SimulationDetails);
 
 implementation
 
@@ -31,7 +32,7 @@ uses classes, sysutils, IniFiles, Process;
 var
    ini: Tinifile;
    stdout: ansistring;
-   cmd: string;
+   cmd: ansistring;
    flags: TReplaceFlags;
 {
    This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
@@ -113,23 +114,32 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
          WriteLn('This input file needs a network.');
 
       WriteLn('Full path to binary: ', getFullBinaryPath(sim.Binary));
-      WriteLn('Generated Command Line: ', generateCommandLine(sim));
+      WriteLn('Generated Command Line: ', generateCommandLine(sim, TRUE));
 
    end;
 
-function generateCommandLine(const sim: SimulationDetails): string;
+procedure runSimulation(const sim: SimulationDetails);
+   begin
+      cmd := generateCommandLine(sim, FALSE);
+      WriteLn(cmd);
+      ExecuteProcess(getFullBinaryPath(sim.Binary), cmd, []);
+   end;
+
+function generateCommandLine(const sim: SimulationDetails; const binary: boolean): ansistring;
    begin
       cmd := '';
+      if binary then
+         cmd := getFullBinaryPath(sim.Binary);
       flags := [rfReplaceAll];
 
-      cmd := Concat(getFullBinaryPath(sim.Binary), ' /c:',IntToStr(sim.Threads),' /A:',sim.AdminDirectory,'/',StringReplace(sim.Country.LongName,' ','_',flags),'_admin.txt /PP:',sim.ParameterDirectory,'/pre',UpperCase(sim.Country.ShortName),'_R0=2.0.txt /P:',sim.ParameterDirectory,'/p_',sim.ControlRoots,'.txt /O:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_',sim.ControlRoots,'_R0=',FloatToStr(sim.R));
+      cmd := cmd + ' /c:'+IntToStr(sim.Threads) + ' /A:'+sim.AdminDirectory + '/' + StringReplace(sim.Country.LongName,' ' , '_',flags) + '_admin.txt /PP:' + sim.ParameterDirectory + '/pre'+UpperCase(sim.Country.ShortName) + '_R0=2.0.txt /P:' + sim.ParameterDirectory + '/p_' + sim.ControlRoots + '.txt /O:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_' + sim.ControlRoots + '_R0=' + FloatToStr(sim.R);
       if isStartup(sim) then
          begin
-            cmd := ConCat(cmd, ' /D:',sim.PopulationsDirectory,'/wpop_',getContinent(sim),'.txt /M:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_pop_density.bin /S:',sim.OutputDirectory,'/Network_',UpperCase(sim.Country.ShortName),'_T',IntToStr(Sim.Threads),'_R',FloatToStr(sim.R),'.bin /R:',FloatToStr(sim.R/2),' ',sim.Seeds)
+            cmd := cmd + ' /D:' + sim.PopulationsDirectory + '/wpop_' + getContinent(sim) + '.txt /M:' + sim.OutputDirectory + '/'+UpperCase(sim.Country.ShortName) + '_pop_density.bin /S:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:' + FloatToStr(sim.R/2) + ' ' + sim.Seeds;
          end
       else
          begin
-            cmd := ConCat(cmd, ' /D:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_pop_density.bin /L:',sim.OutputDirectory,'/Network_',UpperCase(sim.Country.ShortName),'_T',IntToStr(Sim.Threads),'_R',FloatToStr(sim.R),'.bin /R:',FloatToStr(sim.R/2),' ',sim.Seeds)
+            cmd := cmd + ' /D:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_pop_density.bin /L:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:'+FloatToStr(sim.R/2)+' '+sim.Seeds;
 
          end;
 
