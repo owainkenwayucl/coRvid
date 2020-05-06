@@ -20,6 +20,8 @@ type
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
+procedure writeSimulationDetails(const sim: SimulationDetails);
+
 implementation
 
 uses classes, sysutils, IniFiles;
@@ -49,6 +51,40 @@ function readSimulationDetails(const filename: string): SimulationDetails;
       readSimulationDetails.OutputDirectory := ini.ReadString('Output','OutputDirectory','output');
 
       ini.Free;      
+   end;
+
+{
+   Internal function to determin if we need to generate network files/use text density files.
+}
+function isStartup(const sim: SimulationDetails): boolean;
+   begin 
+      isStartup := FALSE;
+      if (sim.Run < 1) then
+         isStartup := TRUE
+   end;
+
+{
+   Procedure to print what we know about a simulation.
+}
+procedure writeSimulationDetails(const sim: SimulationDetails);
+   begin
+      WriteLn('Country:               ', sim.Country.LongName);
+      WriteLn('Country Code:          ', sim.Country.ShortName);
+      WriteLn('R:                     ', sim.R:1:2);
+      WriteLn('Admin Directory:       ', sim.AdminDirectory);
+      WriteLn('Parameter Directory:   ', sim.ParameterDirectory);
+      WriteLn('Populations Directory: ', sim.PopulationsDirectory);
+      WriteLn('Ouput Directory:       ', sim.OutputDirectory);
+      WriteLn('Binary:                ', sim.Binary);
+      WriteLn('Seeds:                 ', sim.Seeds);
+      WriteLn('Threads:               ', sim.Threads);
+      WriteLn('Run:                   ', sim.Run);
+      WriteLn('');
+      WriteLn('Derived information: ');
+      if isStartup(sim) then
+         WriteLn('This input file is in startup mode and will generate a network.')
+      else
+         WriteLn('This input file needs a network.')
    end;
 
 end.

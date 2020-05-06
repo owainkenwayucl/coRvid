@@ -9,5 +9,5 @@ var
 begin
    sim := readSimulationDetails('../input/uk-sim.ini');
 
-   writeln(sim.Country.ShortName);
+   writeSimulationDetails(sim);
 end.
