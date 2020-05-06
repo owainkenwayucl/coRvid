@@ -1,0 +1,7 @@
+# Editor files
+.*.swp
+
+# Compiled code
+*.o
+*.ppu
+*.exe
