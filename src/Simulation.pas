@@ -24,10 +24,11 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
 
 implementation
 
-uses classes, sysutils, IniFiles;
+uses classes, sysutils, IniFiles, Process;
 
 var
    ini: Tinifile;
+   stdout: ansistring;
 
 {
    This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
@@ -85,6 +86,9 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
          WriteLn('This input file is in startup mode and will generate a network.')
       else
          WriteLn('This input file needs a network.');
+
+      if RunCommand('/bin/bash',['-c',Concat('which ', sim.Binary)],stdout) then
+         WriteLn('Full path to binary: ', stdout);
    end;
 
 end.
