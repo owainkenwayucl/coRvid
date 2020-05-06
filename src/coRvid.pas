@@ -4,10 +4,14 @@ uses
    Simulation;
 
 var
-   sim: SimulationDetails;
+   sim1,sim2: SimulationDetails;
 
 begin
-   sim := readSimulationDetails('../input/uk-sim.ini');
+   sim1 := readSimulationDetails('../input/uk-sim-initial.ini');
+   sim2 := readSimulationDetails('../input/uk-sim.ini');
 
-   writeSimulationDetails(sim);
+   WriteLn('Sim1:');
+   writeSimulationDetails(sim1);
+   WriteLn('Sim2:');
+   writeSimulationDetails(sim2);
 end.

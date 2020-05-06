@@ -78,6 +78,17 @@ function getFullBinaryPath(const binary: string): string;
    end;
 
 {
+   TODO: This function is bad and needs redesign.
+}
+function getContinent(const sim: SimulationDetails): string;
+   begin
+      if (sim.Country.ShortName = 'uk') then
+         getContinent := 'eur'
+      else
+         getContinent := 'usacan';
+   end;
+
+{
    Procedure to print what we know about a simulation.
 }
 procedure writeSimulationDetails(const sim: SimulationDetails);
@@ -111,16 +122,17 @@ function generateCommandLine(const sim: SimulationDetails): string;
       cmd := '';
       flags := [rfReplaceAll];
 
-      cmd := Concat(getFullBinaryPath(sim.Binary), ' /c:',IntToStr(sim.Threads),' /A:',sim.AdminDirectory,'/',StringReplace(sim.Country.LongName,' ','_',flags),'_admin.txt');
- {     if isStartup(sim) then
+      cmd := Concat(getFullBinaryPath(sim.Binary), ' /c:',IntToStr(sim.Threads),' /A:',sim.AdminDirectory,'/',StringReplace(sim.Country.LongName,' ','_',flags),'_admin.txt /PP:',sim.ParameterDirectory,'/pre',UpperCase(sim.Country.ShortName),'_R0=2.0.txt /P:',sim.ParameterDirectory,'/p_',sim.ControlRoots,'.txt /O:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_',sim.ControlRoots,'_R0=',FloatToStr(sim.R));
+      if isStartup(sim) then
          begin
-           
+            cmd := ConCat(cmd, ' /D:',sim.PopulationsDirectory,'/wpop_',getContinent(sim),'.txt /M:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_pop_density.bin /S:',sim.OutputDirectory,'/Network_',UpperCase(sim.Country.ShortName),'_T',IntToStr(Sim.Threads),'_R',FloatToStr(sim.R),'.bin /R:',FloatToStr(sim.R/2),' ',sim.Seeds)
          end
       else
          begin
+            cmd := ConCat(cmd, ' /D:',sim.OutputDirectory,'/',UpperCase(sim.Country.ShortName),'_pop_density.bin /L:',sim.OutputDirectory,'/Network_',UpperCase(sim.Country.ShortName),'_T',IntToStr(Sim.Threads),'_R',FloatToStr(sim.R),'.bin /R:',FloatToStr(sim.R/2),' ',sim.Seeds)
 
          end;
-}
+
       generateCommandLine := cmd;
    end;
 
