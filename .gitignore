@@ -3,6 +3,8 @@
 fp.cfg
 fp___.err
 fp___.out
+fp.ini
+fp.dsk
 
 # Compiled code
 *.o
