@@ -64,6 +64,13 @@ function isStartup(const sim: SimulationDetails): boolean;
          isStartup := TRUE;
    end;
 
+function getFullBinaryPath(const binary: string): string;
+   begin
+      getFullBinaryPath := '';
+      if RunCommand('/bin/bash',['-c',Concat('which ', binary)],stdout) then
+         getFullBinaryPath := stdout;
+   end;
+
 {
    Procedure to print what we know about a simulation.
 }
@@ -87,8 +94,7 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
       else
          WriteLn('This input file needs a network.');
 
-      if RunCommand('/bin/bash',['-c',Concat('which ', sim.Binary)],stdout) then
-         WriteLn('Full path to binary: ', stdout);
+      WriteLn('Full path to binary: ', getFullBinaryPath(sim.Binary));
    end;
 
 end.
