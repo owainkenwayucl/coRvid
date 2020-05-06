@@ -1,15 +1,13 @@
 Program coRvid;
 
 uses 
-   Simulation, classes, sysutils, IniFiles;
+   Simulation;
 
 var
    sim: SimulationDetails;
 
 begin
-   sim.Country.ShortName := 'uk';
-   sim.Country.LongName := 'United Kingdom';
+   sim := readSimulationDetails('../input/uk-sim.ini');
 
-   sim.R := 3.0;
-   
+   writeln(sim.Country.ShortName);
 end.
