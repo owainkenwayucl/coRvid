@@ -10,7 +10,7 @@ type
       Country: record
          ShortName, LongName: string;
       end;
-
+      ControlRoots: string;
       AdminDirectory, ParameterDirectory, PopulationsDirectory: string;
       Binary, OutputDirectory: string; 
       Seeds: string; { TODO: This should be four integers really. }
@@ -19,6 +19,8 @@ type
    end;
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
+
+function generateCommandLine(const sim: SimulationDetails): string;
 
 procedure writeSimulationDetails(const sim: SimulationDetails);
 
@@ -29,7 +31,8 @@ uses classes, sysutils, IniFiles, Process;
 var
    ini: Tinifile;
    stdout: ansistring;
-
+   cmd: string;
+   flags: TReplaceFlags;
 {
    This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
 }
@@ -43,7 +46,7 @@ function readSimulationDetails(const filename: string): SimulationDetails;
       readSimulationDetails.AdminDirectory := ini.ReadString('Parameters','AdminDirectory','data/admin_units');
       readSimulationDetails.ParameterDirectory := ini.ReadString('Parameters','ParameterDirectory','data/param_files');
       readSimulationDetails.PopulationsDirectory := ini.ReadString('Parameters','PopulationsDirectory','data/populations');
-
+      readSimulationDetails.ControlRoots := ini.ReadString('Parameters','ControlRoots','NoInt');
       readSimulationDetails.Threads := ini.ReadInteger('Simulation','Threads',1);
       readSimulationDetails.Run := ini.ReadInteger('Simulation','Run',0); { Default to setup }
       readSimulationDetails.Seeds := ini.ReadString('Simulation','Seeds','98798150 729101 17389101 4797132');
@@ -71,7 +74,7 @@ function getFullBinaryPath(const binary: string): string;
    begin
       getFullBinaryPath := '';
       if RunCommand('/bin/bash',['-c',Concat('which ', binary)],stdout) then
-         getFullBinaryPath := stdout;
+         getFullBinaryPath := Trim(stdout);
    end;
 
 {
@@ -84,6 +87,7 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
       WriteLn('R:                     ', sim.R:1:2);
       WriteLn('Admin Directory:       ', sim.AdminDirectory);
       WriteLn('Parameter Directory:   ', sim.ParameterDirectory);
+      WriteLN('Control Roots:         ', sim.ControlRoots);
       WriteLn('Populations Directory: ', sim.PopulationsDirectory);
       WriteLn('Ouput Directory:       ', sim.OutputDirectory);
       WriteLn('Binary:                ', sim.Binary);
@@ -98,6 +102,26 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
          WriteLn('This input file needs a network.');
 
       WriteLn('Full path to binary: ', getFullBinaryPath(sim.Binary));
+      WriteLn('Generated Command Line: ', generateCommandLine(sim));
+
+   end;
+
+function generateCommandLine(const sim: SimulationDetails): string;
+   begin
+      cmd := '';
+      flags := [rfReplaceAll];
+
+      cmd := Concat(getFullBinaryPath(sim.Binary), ' /c:',IntToStr(sim.Threads),' /A:',sim.AdminDirectory,'/',StringReplace(sim.Country.LongName,' ','_',flags),'_admin.txt');
+ {     if isStartup(sim) then
+         begin
+           
+         end
+      else
+         begin
+
+         end;
+}
+      generateCommandLine := cmd;
    end;
 
 end.
