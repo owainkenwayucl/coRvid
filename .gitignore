@@ -1,5 +1,8 @@
 # Editor files
 .*.swp
+fp.cfg
+fp___.err
+fp___.out
 
 # Compiled code
 *.o
