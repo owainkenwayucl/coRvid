@@ -55,7 +55,7 @@ function readSimulationDetails(const filename: string): SimulationDetails;
    end;
 
 {
-   Internal function to determin if we need to generate network files/use text density files.
+   Internal function to determine if we need to generate network files/use text density files.
 }
 function isStartup(const sim: SimulationDetails): boolean;
    begin 
@@ -64,6 +64,9 @@ function isStartup(const sim: SimulationDetails): boolean;
          isStartup := TRUE;
    end;
 
+{
+   Internal function to work out the real path to the binary.
+}
 function getFullBinaryPath(const binary: string): string;
    begin
       getFullBinaryPath := '';
