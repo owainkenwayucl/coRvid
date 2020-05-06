@@ -71,7 +71,7 @@ function isStartup(const sim: SimulationDetails): boolean;
 {
    Internal function to work out the real path to the binary.
 }
-function getFullBinaryPath(const binary: string): string;
+function getFullBinaryPath(const binary: string): ansistring;
    begin
       getFullBinaryPath := '';
       if RunCommand('/bin/bash',['-c',Concat('which ', binary)],stdout) then
