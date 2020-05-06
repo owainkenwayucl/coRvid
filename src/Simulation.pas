@@ -60,7 +60,7 @@ function isStartup(const sim: SimulationDetails): boolean;
    begin 
       isStartup := FALSE;
       if (sim.Run < 1) then
-         isStartup := TRUE
+         isStartup := TRUE;
    end;
 
 {
@@ -84,7 +84,7 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
       if isStartup(sim) then
          WriteLn('This input file is in startup mode and will generate a network.')
       else
-         WriteLn('This input file needs a network.')
+         WriteLn('This input file needs a network.');
    end;
 
 end.
