@@ -1,3 +1,6 @@
+{
+   This is a basic wrapper for the routines in the Simulation unit.  It takes an argument and tells the Simulation unit to read it into a SimulationDetails record and then run that.
+}
 Program coRvid;
 
 uses 
