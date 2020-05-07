@@ -48,7 +48,7 @@ module purge
 module load rcps-core compilers/intel/2020 python3/3.7 covid-19-spatial-sim/0.8.0
 
 # Get a copy of the data, and un-gzip the gzipped files
-cp -R SPATIALSIM_DATA .
+cp -R $SPATIALSIM_DATA .
 cd data/populations
 for a in *.gz
 do
