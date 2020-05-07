@@ -34,29 +34,6 @@ var
    stdout: ansistring;
    cmd: ansistring;
    flags: TReplaceFlags;
-{
-   This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
-}
-function readSimulationDetails(const filename: string): SimulationDetails;
-   begin
-      ini := Tinifile.Create(filename);
-      readSimulationDetails.Country.ShortName := ini.ReadString('Country', 'ShortName','uk');
-      readSimulationDetails.Country.LongName := ini.ReadString('Country', 'LongName','United Kingdom');
-
-      readSimulationDetails.R := ini.ReadFloat('Parameters','R',3.0);
-      readSimulationDetails.AdminDirectory := ini.ReadString('Parameters','AdminDirectory','data/admin_units');
-      readSimulationDetails.ParameterDirectory := ini.ReadString('Parameters','ParameterDirectory','data/param_files');
-      readSimulationDetails.PopulationsDirectory := ini.ReadString('Parameters','PopulationsDirectory','data/populations');
-      readSimulationDetails.ControlRoots := ini.ReadString('Parameters','ControlRoots','NoInt');
-      readSimulationDetails.Threads := ini.ReadInteger('Simulation','Threads',1);
-      readSimulationDetails.Run := ini.ReadInteger('Simulation','Run',0); { Default to setup }
-      readSimulationDetails.Seeds := ini.ReadString('Simulation','Seeds','98798150 729101 17389101 4797132');
-      readSimulationDetails.Binary := ini.ReadString('Simulation','Binary',Concat('CovidSim_',readSimulationDetails.Country.ShortName));
-
-      readSimulationDetails.OutputDirectory := ini.ReadString('Output','OutputDirectory','output');
-
-      ini.Free;      
-   end;
 
 {
    Internal function to determine if we need to generate network files/use text density files.
@@ -88,6 +65,35 @@ function getContinent(const sim: SimulationDetails): string;
       else
          getContinent := 'usacan';
    end;
+
+{
+   This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
+}
+function readSimulationDetails(const filename: string): SimulationDetails;
+   begin
+      ini := Tinifile.Create(filename);
+      readSimulationDetails.Country.ShortName := ini.ReadString('Country', 'ShortName','uk');
+      readSimulationDetails.Country.LongName := ini.ReadString('Country', 'LongName','United Kingdom');
+
+      readSimulationDetails.R := ini.ReadFloat('Parameters','R',3.0);
+      readSimulationDetails.AdminDirectory := ini.ReadString('Parameters','AdminDirectory','data/admin_units');
+      readSimulationDetails.ParameterDirectory := ini.ReadString('Parameters','ParameterDirectory','data/param_files');
+      readSimulationDetails.PopulationsDirectory := ini.ReadString('Parameters','PopulationsDirectory','data/populations');
+      readSimulationDetails.ControlRoots := ini.ReadString('Parameters','ControlRoots','NoInt');
+      readSimulationDetails.Threads := ini.ReadInteger('Simulation','Threads',1);
+      readSimulationDetails.Run := ini.ReadInteger('Simulation','Run',0); { Default to setup }
+      readSimulationDetails.Seeds := ini.ReadString('Simulation','Seeds','98798150 729101 17389101 4797132');
+      readSimulationDetails.Binary := ini.ReadString('Simulation','Binary',Concat('CovidSim_',readSimulationDetails.Country.ShortName));
+
+      readSimulationDetails.OutputDirectory := ini.ReadString('Output','OutputDirectory','output');
+
+      if isStartup(readSimulationDetails) = FALSE then
+         readSimulationDetails.OutputDirectory := readSimulationDetails.OutputDirectory  + '-' + IntToStr(readSimulationDetails.Run);
+
+      ini.Free;      
+   end;
+
+
 
 {
    Procedure to print what we know about a simulation.
