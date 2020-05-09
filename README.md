@@ -40,6 +40,8 @@ This is main executable which launches simulations.  To use it, you need to writ
 
 You will need to copy the `data` directory from mics somewhere.  On UCL resources this along with the code is provided in a module file so we'll assume this configuration, and assume `coRvid.exe` is in your `$PATH`.
 
+For versions before 0.9.0, there are separate binaries for UK and US simulations so `.ini` files for those have also been provided.
+
 On a UCL system, in a directory with your `.ini` files in it:
 
 ```bash
