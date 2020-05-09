@@ -1,4 +1,4 @@
-; Input file to replicated default config of the run initial sample tool.
+; Input file to replicated default config of the run sample tool.
 
 [Country]
 ShortName=uk
@@ -9,13 +9,13 @@ R=3.0
 AdminDirectory=data/admin_units
 ParameterDirectory=data/param_files
 PopulationsDirectory=data/populations
+ControlRoots=PC7_CI_HQ_SD
 
 [Simulation]
 Threads=1
 Seeds=98798150 729101 17389101 4797132
-; Run=0 tells corVid that this is the setup run
-Run=0 
-Binary=CovidSim
+Run=1
+Binary=CovidSim_uk
 
 [Output]
 OutputDirectory=output
