@@ -7,14 +7,17 @@ ifneq ($(strip $(DESTDIR)),)
 	INSTALLDIR=$(DESTDIR)
 endif
 
-all: coRvid.exe test.exe
+all: coRvid.exe CompareTSV.exe
 
 coRvid.exe: coRvid.pas Simulation.pas Makefile
 	$(FPC) $(FPARGS) -ocoRvid.exe coRvid.pas
 
+CompareTSV.exe: CompareTSVFile.pas TSVTools.pas Makefile
+	$(FPC) $(FPARGS) -oCompareTSV.exe CompareTSVFile.pas
+
 # This is dev only and not for unit testing
-test.exe: test.pas *.pas
-	$(FPC) $(FPARGS) -otest.exe test.pas
+#test.exe: test.pas *.pas
+#	$(FPC) $(FPARGS) -otest.exe test.pas
 
 install: coRvid.exe
 	cp coRvid.exe $(INSTALLDIR)
