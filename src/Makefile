@@ -16,8 +16,8 @@ CompareTSV.exe: CompareTSVFile.pas TSVTools.pas Makefile
 	$(FPC) $(FPARGS) -oCompareTSV.exe CompareTSVFile.pas
 
 # This is dev only and not for unit testing
-#test.exe: test.pas *.pas
-#	$(FPC) $(FPARGS) -otest.exe test.pas
+test.exe: test.pas *.pas
+	$(FPC) $(FPARGS) -otest.exe test.pas
 
 install: coRvid.exe
 	cp coRvid.exe $(INSTALLDIR)
