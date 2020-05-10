@@ -19,8 +19,9 @@ CompareTSV.exe: CompareTSVFile.pas TSVTools.pas Makefile
 test.exe: test.pas *.pas
 	$(FPC) $(FPARGS) -otest.exe test.pas
 
-install: coRvid.exe
+install: coRvid.exe CompareTSV.exe
 	cp coRvid.exe $(INSTALLDIR)
+	cp CompareTSV.exe $(INSTALLDIR)
 
 cleaneditor:
 	rm -rf fp.cfg fp.ini fp.dsk fp___.out fp___.err .*.swp
