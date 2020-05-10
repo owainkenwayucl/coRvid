@@ -1,13 +1,20 @@
 FPC=fpc
-FPARGS=-Mobjfpc 
+# Turn on object FPC mode and ansistrings.
+FPARGS=-Mobjfpc -Sh
 INSTALLDIR=..
 
 ifneq ($(strip $(DESTDIR)),) 
 	INSTALLDIR=$(DESTDIR)
 endif
 
+all: coRvid.exe test.exe
+
 coRvid.exe: coRvid.pas Simulation.pas Makefile
 	$(FPC) $(FPARGS) -ocoRvid.exe coRvid.pas
+
+# This is dev only and not for unit testing
+test.exe: test.pas
+	$(FPC) $(FPARGS) -otest.exe test.pas
 
 install: coRvid.exe
 	cp coRvid.exe $(INSTALLDIR)
