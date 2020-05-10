@@ -13,7 +13,7 @@ coRvid.exe: coRvid.pas Simulation.pas Makefile
 	$(FPC) $(FPARGS) -ocoRvid.exe coRvid.pas
 
 # This is dev only and not for unit testing
-test.exe: test.pas
+test.exe: test.pas *.pas
 	$(FPC) $(FPARGS) -otest.exe test.pas
 
 install: coRvid.exe
