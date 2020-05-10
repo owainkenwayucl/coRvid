@@ -28,7 +28,7 @@ make
 make install DESTDIR=/some/install/path
 ```
 
-This binary is static so you do not need the FreePascal compiler in your environment to use it.
+The binaries are static so you do not need the FreePascal compiler in your environment to use it.
 
 ## Use
 
@@ -67,3 +67,21 @@ cp -R output output-1
 # Run the sim with the test intervention
 coRvid.exe uk-sim.ini
 ```
+
+### CompareTSV.exe
+
+This application compares two TSV format files, such as the `.xls` files created by mics.  It writes the comparison file to either `CompareTSV.out` or the third argument it is passed:
+
+```
+CompareTSV.exe <file1> <file2> <output file>
+```
+
+The output file is also in TSV format, with cells that contain:
+
+| Case       | Value               |
+|------------|---------------------|
+| numerical  | cell 2 - cell     1 |
+| == strings | contents of cell    |
+| ¬= strings | cell 1 << >> cell 2 |
+
+In addition, it returns 0 if the files match, 1 if they don't to make it scriptable.
