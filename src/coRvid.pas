@@ -13,6 +13,12 @@ var
 begin
    if ParamCount > 0 then
    begin
+
+      WriteLn('');
+      WriteLn('coRvid mrc-ide Covid 19 simulation tool');
+      WriteLn('=======================================');
+      WriteLn('');
+
       inputfile := ParamStr(1);
       sim := readSimulationDetails(inputfile);
 
