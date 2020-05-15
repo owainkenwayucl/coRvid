@@ -10,3 +10,6 @@ fp.dsk
 *.o
 *.ppu
 *.exe
+
+# Lazarus project
+src/gui/*
