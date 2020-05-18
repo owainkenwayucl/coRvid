@@ -20,9 +20,8 @@ type
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
-function generateCommandLine(const sim: SimulationDetails; const binary: boolean): ansistring;
-
 procedure writeSimulationDetails(const sim: SimulationDetails);
+
 procedure runSimulation(const sim: SimulationDetails);
 
 implementation
@@ -34,6 +33,8 @@ var
    stdout: ansistring;
    cmd: ansistring;
    flags: TReplaceFlags;
+
+{ NOTE: INTERNAL FUNCTIONS AND PROCEDURES BELOW. }
 
 {
    Internal function to determine if we need to generate network files/use text density files.
@@ -65,6 +66,32 @@ function getContinent(const sim: SimulationDetails): string;
       else
          getContinent := 'usacan';
    end;
+
+{
+   Generate a command line either to be printed out and used later or to be used by runSimulation.
+   binary - boolean as to whether or not to include the binary in the command line or just the arguments.
+
+   Using ansistring as the return value as due to the significant length of arguments passed to the mrc-ide covid sim, command line exceeds 255 characters.
+}
+function generateCommandLine(const sim: SimulationDetails; const binary: boolean): ansistring;
+   begin
+      cmd := '';
+      if binary then
+         cmd := getFullBinaryPath(sim.Binary);
+      flags := [rfReplaceAll];
+      cmd := cmd + ' /c:'+IntToStr(sim.Threads) + ' /A:'+sim.AdminDirectory + '/' + StringReplace(sim.Country.LongName,' ' , '_',flags) + '_admin.txt /PP:' + sim.ParameterDirectory + '/pre'+UpperCase(sim.Country.ShortName) + '_R0=2.0.txt /P:' + sim.ParameterDirectory + '/p_' + sim.ControlRoots + '.txt /O:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_' + sim.ControlRoots + '_R0=' + FloatToStr(sim.R);
+      if isStartup(sim) then
+         begin
+            cmd := cmd + ' /D:' + sim.PopulationsDirectory + '/wpop_' + getContinent(sim) + '.txt /M:' + sim.OutputDirectory + '/'+UpperCase(sim.Country.ShortName) + '_pop_density.bin /S:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:' + FloatToStr(sim.R/2) + ' ' + sim.Seeds;
+         end
+      else
+         begin
+            cmd := cmd + ' /D:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_pop_density.bin /L:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:'+FloatToStr(sim.R/2)+' '+sim.Seeds;
+         end;
+      generateCommandLine := cmd;
+   end;
+
+{ NOTE: PUBLIC FUNCTIONS AND PROCEDURES BELOW. }
 
 {
    This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
@@ -132,28 +159,5 @@ procedure runSimulation(const sim: SimulationDetails);
       ExecuteProcess(getFullBinaryPath(sim.Binary), cmd, []);
    end;
 
-{
-   Generate a command line either to be printed out and used later or to be used by runSimulation.
-   binary - boolean as to whether or not to include the binary in the command line or just the arguments.
-
-   Using ansistring as the return value as due to the significant length of arguments passed to the mrc-ide covid sim, command line exceeds 255 characters.
-}
-function generateCommandLine(const sim: SimulationDetails; const binary: boolean): ansistring;
-   begin
-      cmd := '';
-      if binary then
-         cmd := getFullBinaryPath(sim.Binary);
-      flags := [rfReplaceAll];
-      cmd := cmd + ' /c:'+IntToStr(sim.Threads) + ' /A:'+sim.AdminDirectory + '/' + StringReplace(sim.Country.LongName,' ' , '_',flags) + '_admin.txt /PP:' + sim.ParameterDirectory + '/pre'+UpperCase(sim.Country.ShortName) + '_R0=2.0.txt /P:' + sim.ParameterDirectory + '/p_' + sim.ControlRoots + '.txt /O:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_' + sim.ControlRoots + '_R0=' + FloatToStr(sim.R);
-      if isStartup(sim) then
-         begin
-            cmd := cmd + ' /D:' + sim.PopulationsDirectory + '/wpop_' + getContinent(sim) + '.txt /M:' + sim.OutputDirectory + '/'+UpperCase(sim.Country.ShortName) + '_pop_density.bin /S:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:' + FloatToStr(sim.R/2) + ' ' + sim.Seeds;
-         end
-      else
-         begin
-            cmd := cmd + ' /D:' + sim.OutputDirectory + '/' + UpperCase(sim.Country.ShortName) + '_pop_density.bin /L:' + sim.OutputDirectory + '/Network_' + UpperCase(sim.Country.ShortName) + '_T' + IntToStr(Sim.Threads) + '_R' + FloatToStr(sim.R) + '.bin /R:'+FloatToStr(sim.R/2)+' '+sim.Seeds;
-         end;
-      generateCommandLine := cmd;
-   end;
 
 end.
