@@ -18,6 +18,8 @@ type
       R: double;
    end;
 
+function compareSimulationDetails(const sim1, sim2: SimulationDetails): boolean;
+
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
 procedure writeSimulationDetails(const sim: SimulationDetails);
@@ -92,6 +94,28 @@ function generateCommandLine(const sim: SimulationDetails; const binary: boolean
    end;
 
 { NOTE: PUBLIC FUNCTIONS AND PROCEDURES BELOW. }
+
+{
+   This function compares two SimulationDetails records to see if they refer to the same simulation.
+}
+function compareSimulationDetails(const sim1, sim2: SimulationDetails): boolean;
+   begin
+      compareSimulationDetails := TRUE;
+
+      if not (Trim(sim1.Country.ShortName) = Trim(sim2.Country.ShortName)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.Country.LongName) = Trim(sim2.Country.LongName)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.ControlRoots) = Trim(sim2.ControlRoots)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.AdminDirectory) = Trim(sim2.AdminDirectory)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.ParameterDirectory) = Trim(sim2.ParameterDirectory)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.PopulationsDirectory) = Trim(sim2.PopulationsDirectory)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.Binary) = Trim(sim2.binary)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.OutputDirectory) = Trim(sim2.OutputDirectory)) then compareSimulationDetails := FALSE;
+      if not (Trim(sim1.Seeds) = Trim(sim2.Seeds)) then compareSimulationDetails := FALSE;
+      if not (sim1.Threads = sim2.Threads) then compareSimulationDetails := FALSE;
+      if not (sim1.Run = sim2.Run) then compareSimulationDetails := FALSE;
+      if not (sim1.R = sim2.R) then compareSimulationDetails := FALSE;
+      
+   end;
 
 {
    This function reads in an ini file with simulation parameters and returns a SimulationDetails record.
