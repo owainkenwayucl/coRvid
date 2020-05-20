@@ -22,6 +22,8 @@ function compareSimulationDetails(const sim1, sim2: SimulationDetails): boolean;
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
+procedure recordSimulationDetails(const filename: string; sim: SimulationDetails);
+
 procedure writeSimulationDetails(const sim: SimulationDetails);
 
 procedure runSimulation(const sim: SimulationDetails);
@@ -145,6 +147,32 @@ function readSimulationDetails(const filename: string): SimulationDetails;
    end;
 
 {
+   This procedure writes a SimulationDetails record out to an ini file.
+}
+procedure recordSimulationDetails(const filename: string; sim: SimulationDetails);
+   begin
+      ini := Tinifile.Create(filename);
+      ini.WriteString('Country', 'ShortName',sim.Country.ShortName);
+      ini.Writestring('Country', 'LongName',sim.Country.LongName);
+
+      ini.WriteFloat('Parameters','R',sim.R);
+      ini.WriteString('Parameters','AdminDirectory',sim.AdminDirectory);
+      ini.WriteString('Parameters','ParameterDirectory',sim.ParameterDirectory);
+      ini.WriteString('Parameters','PopulationsDirectory',sim.PopulationsDirectory);
+      ini.WriteString('Parameters','ControlRoots',sim.ControlRoots);
+      ini.WriteInteger('Simulation','Threads',sim.Threads);
+      ini.WriteInteger('Simulation','Run',sim.Run); 
+      ini.WriteString('Simulation','Seeds',sim.Seeds);
+      ini.WriteString('Simulation','Binary',sim.Binary);
+
+      ini.WriteString('Output','OutputDirectory',sim.OutputDirectory);
+         
+      ini.UpdateFile;
+
+      ini.Free;
+   end;
+
+{
    Procedure to print what we know about a simulation.
 }
 procedure writeSimulationDetails(const sim: SimulationDetails);
@@ -172,6 +200,7 @@ procedure writeSimulationDetails(const sim: SimulationDetails);
       WriteLn('Generated Command Line: ', generateCommandLine(sim, TRUE));
 
    end;
+
 
 {
    Procedure to actually run a simulation.
