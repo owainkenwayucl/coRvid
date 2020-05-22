@@ -9,6 +9,9 @@ endif
 
 all: coRvid.exe CompareTSV.exe
 
+tests: test.exe
+	./test.exe
+
 coRvid.exe: coRvid.pas Simulation.pas Makefile
 	$(FPC) $(FPARGS) -ocoRvid.exe coRvid.pas
 
