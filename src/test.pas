@@ -9,9 +9,9 @@ var
 
 begin
    failed := 0;
-   insim := readSimulationDetails('../input/uk-sim-initial.ini');
-   recordSimulationDetails('test.ini', insim);
-   outsim := readSimulationDetails('test.ini');
+   insim := readSimulationDetails('tests/input/uk-sim-initial.ini');
+   recordSimulationDetails('tests/output/test.ini', insim);
+   outsim := readSimulationDetails('tests/output/test.ini');
    if (compareSimulationDetails(insim, outsim)) then
       begin
          WriteLn('Test passed.');

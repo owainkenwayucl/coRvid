@@ -29,5 +29,9 @@ install: coRvid.exe CompareTSV.exe
 cleaneditor:
 	rm -rf fp.cfg fp.ini fp.dsk fp___.out fp___.err .*.swp
 
-clean:
-	rm -f *.exe *.ppu *.o
+clean: tidy
+	rm -f *.exe 
+
+tidy:
+	rm -f *.ppu *.o tests/ouput/*.ini
+	
