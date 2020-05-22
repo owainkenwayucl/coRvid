@@ -11,5 +11,8 @@ fp.dsk
 *.ppu
 *.exe
 
+# Test output
+src/tests/output/*
+
 # Lazarus project
 src/gui/*
