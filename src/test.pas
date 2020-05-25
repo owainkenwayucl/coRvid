@@ -26,10 +26,21 @@ function test_readwrite_sim(): boolean;
 function test_change_sim(): boolean;
    begin
       insim := readSimulationDetails('tests/input/uk-sim-initial.ini');
-      outsim := readSimulationDetails('tests/input/uk-sim-initial.ini');
+      outsim := copySimulationDetails(insim);
       outsim.R := 1.2;
 
       test_change_sim := not (compareSimulationDetails(insim, outsim));
+   end;
+
+{
+   Test that copySimulationDetails works.
+}
+function test_copy_sim(): boolean;
+   begin
+      insim := readSimulationDetails('tests/input/uk-sim-initial.ini');
+      outsim := copySimulationDetails(insim);
+
+      test_copy_sim := compareSimulationDetails(insim, outsim);
    end;
 
 {
@@ -60,6 +71,7 @@ begin
    WriteLn('Running tests: ');
 
    failed := failadd(test_readwrite_sim(), failed);
+   failed := failadd(test_copy_sim(), failed);
    failed := failadd(test_change_sim(), failed);
 
    WriteLn('');

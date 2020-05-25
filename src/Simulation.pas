@@ -22,6 +22,8 @@ function compareSimulationDetails(const sim1, sim2: SimulationDetails): boolean;
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
 
+function copySimulationDetails(const orig: SimulationDetails): SimulationDetails;
+
 procedure recordSimulationDetails(const filename: string; sim: SimulationDetails);
 
 procedure writeSimulationDetails(const sim: SimulationDetails);
@@ -146,6 +148,25 @@ function readSimulationDetails(const filename: string): SimulationDetails;
       ini.Free;      
    end;
 
+{
+   Safely duplicate a SimulationDetails record.
+}
+function copySimulationDetails(const orig: SimulationDetails): SimulationDetails;
+   begin
+      copySimulationDetails.Country.ShortName := orig.Country.ShortName;
+      copySimulationDetails.Country.LongName := orig.Country.LongName;
+      copySimulationDetails.R := orig.R;
+      copySimulationDetails.AdminDirectory := orig.AdminDirectory;
+      copySimulationDetails.ParameterDirectory := orig.ParameterDirectory;
+      copySimulationDetails.PopulationsDirectory := orig.PopulationsDirectory;
+      copySimulationDetails.ControlRoots := orig.ControlRoots;
+      copySimulationDetails.Threads := orig.Threads;
+      copySimulationDetails.Run := orig.Run;
+      copySimulationDetails.Seeds := orig.Seeds;
+      copySimulationDetails.Binary := orig.Binary;
+      copySimulationDetails.OutputDirectory := orig.OutputDirectory;
+
+   end;
 {
    This procedure writes a SimulationDetails record out to an ini file.
 }
