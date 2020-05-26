@@ -18,6 +18,8 @@ type
       R: double;
    end;
 
+function isStartup(const sim: SimulationDetails): boolean;
+
 function compareSimulationDetails(const sim1, sim2: SimulationDetails): boolean;
 
 function readSimulationDetails(const filename: string): SimulationDetails; 
@@ -41,16 +43,6 @@ var
    flags: TReplaceFlags;
 
 { NOTE: INTERNAL FUNCTIONS AND PROCEDURES BELOW. }
-
-{
-   Internal function to determine if we need to generate network files/use text density files.
-}
-function isStartup(const sim: SimulationDetails): boolean;
-   begin 
-      isStartup := FALSE;
-      if (sim.Run < 1) then
-         isStartup := TRUE;
-   end;
 
 {
    Internal function to work out the real path to the binary.
@@ -98,6 +90,16 @@ function generateCommandLine(const sim: SimulationDetails; const binary: boolean
    end;
 
 { NOTE: PUBLIC FUNCTIONS AND PROCEDURES BELOW. }
+
+{
+   Function to determine if we need to generate network files/use text density files.
+}
+function isStartup(const sim: SimulationDetails): boolean;
+   begin 
+      isStartup := FALSE;
+      if (sim.Run < 1) then
+         isStartup := TRUE;
+   end;
 
 {
    This function compares two SimulationDetails records to see if they refer to the same simulation.
