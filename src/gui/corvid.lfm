@@ -1,0 +1,296 @@
+object SimulationDetailsForm: TSimulationDetailsForm
+  Left = 361
+  Height = 598
+  Top = 168
+  Width = 637
+  Caption = 'Simulation Details'
+  ClientHeight = 598
+  ClientWidth = 637
+  LCLVersion = '1.8.2.0'
+  object Run: TButton
+    Left = 544
+    Height = 39
+    Top = 539
+    Width = 80
+    Caption = 'Run'
+    TabOrder = 0
+  end
+  object Country: TGroupBox
+    Left = 8
+    Height = 58
+    Top = 8
+    Width = 617
+    Caption = 'Country'
+    ClientHeight = 40
+    ClientWidth = 615
+    TabOrder = 1
+    object LongName: TEdit
+      Left = 88
+      Height = 29
+      Top = 4
+      Width = 347
+      TabOrder = 0
+      Text = 'United Kingdom'
+    end
+    object ShortName: TEdit
+      Left = 552
+      Height = 29
+      Top = 4
+      Width = 48
+      TabOrder = 1
+      Text = 'UK'
+    end
+    object Label1: TLabel
+      Left = 24
+      Height = 17
+      Top = 8
+      Width = 57
+      Caption = 'Country:'
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 504
+      Height = 17
+      Top = 8
+      Width = 39
+      Caption = 'Code:'
+      ParentColor = False
+    end
+  end
+  object Parameters: TGroupBox
+    Left = 8
+    Height = 238
+    Top = 74
+    Width = 617
+    Caption = 'Parameters'
+    ClientHeight = 220
+    ClientWidth = 615
+    TabOrder = 2
+    object R: TEdit
+      Left = 256
+      Height = 29
+      Top = 5
+      Width = 41
+      NumbersOnly = True
+      TabOrder = 0
+      Text = '3.0'
+    end
+    object AdminDir: TEdit
+      Left = 256
+      Height = 29
+      Top = 48
+      Width = 344
+      TabOrder = 1
+      Text = 'data/admin_units'
+    end
+    object ParamDir: TEdit
+      Left = 256
+      Height = 29
+      Top = 88
+      Width = 344
+      TabOrder = 2
+      Text = 'data/param_files'
+    end
+    object PopulationDir: TEdit
+      Left = 256
+      Height = 29
+      Top = 127
+      Width = 344
+      TabOrder = 3
+      Text = 'data/populations'
+    end
+    object Label3: TLabel
+      Left = 237
+      Height = 17
+      Top = 8
+      Width = 13
+      Caption = 'R:'
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 136
+      Height = 17
+      Top = 52
+      Width = 114
+      Caption = 'Admin Directory:'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 108
+      Height = 17
+      Top = 90
+      Width = 142
+      Caption = 'Parameter Directory:'
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 99
+      Height = 17
+      Top = 127
+      Width = 151
+      Caption = 'Populations Directory:'
+      ParentColor = False
+    end
+    object ControlRoots: TEdit
+      Left = 256
+      Height = 29
+      Top = 170
+      Width = 344
+      TabOrder = 4
+    end
+    object Label8: TLabel
+      Left = 152
+      Height = 17
+      Top = 175
+      Width = 98
+      Caption = 'Control Roots:'
+      ParentColor = False
+    end
+  end
+  object Simulation: TGroupBox
+    Left = 8
+    Height = 136
+    Top = 320
+    Width = 616
+    Caption = 'Simulation'
+    ClientHeight = 118
+    ClientWidth = 614
+    TabOrder = 3
+    object Binary: TEdit
+      Left = 88
+      Height = 29
+      Top = 4
+      Width = 162
+      TabOrder = 0
+      Text = 'CovidSim'
+    end
+    object Threads: TEdit
+      Left = 89
+      Height = 29
+      Top = 40
+      Width = 41
+      NumbersOnly = True
+      TabOrder = 1
+      Text = '1'
+    end
+    object Seeds: TEdit
+      Left = 89
+      Height = 29
+      Top = 80
+      Width = 255
+      TabOrder = 2
+      Text = '98798150 729101 17389101 4797132'
+    end
+    object RunDetails: TGroupBox
+      Left = 352
+      Height = 98
+      Top = 10
+      Width = 245
+      Caption = 'RunDetails'
+      ClientHeight = 80
+      ClientWidth = 243
+      TabOrder = 3
+      object InitialSimulation: TRadioButton
+        Left = 11
+        Height = 23
+        Top = 12
+        Width = 92
+        Caption = 'Initial Run'
+        Checked = True
+        TabOrder = 0
+        TabStop = True
+      end
+      object RunNumber: TRadioButton
+        Left = 11
+        Height = 23
+        Top = 45
+        Width = 113
+        Caption = 'Run Number:'
+        TabOrder = 1
+      end
+      object RunNumVal: TEdit
+        Left = 144
+        Height = 29
+        Top = 45
+        Width = 80
+        TabOrder = 2
+        Text = '0'
+      end
+    end
+    object Label9: TLabel
+      Left = 35
+      Height = 17
+      Top = 8
+      Width = 46
+      Caption = 'Binary:'
+      ParentColor = False
+    end
+    object Label10: TLabel
+      Left = 23
+      Height = 17
+      Top = 40
+      Width = 58
+      Caption = 'Threads:'
+      ParentColor = False
+    end
+    object Label11: TLabel
+      Left = 37
+      Height = 17
+      Top = 80
+      Width = 44
+      Caption = 'Seeds:'
+      ParentColor = False
+    end
+  end
+  object Output: TGroupBox
+    Left = 8
+    Height = 67
+    Top = 456
+    Width = 615
+    Caption = 'Output'
+    ClientHeight = 49
+    ClientWidth = 613
+    TabOrder = 4
+    object OutputDir: TEdit
+      Left = 256
+      Height = 29
+      Top = 8
+      Width = 344
+      TabOrder = 0
+      Text = 'output'
+    end
+    object Label7: TLabel
+      Left = 132
+      Height = 17
+      Top = 14
+      Width = 118
+      Caption = 'Output Directory:'
+      ParentColor = False
+    end
+  end
+  object Save: TButton
+    Left = 456
+    Height = 39
+    Top = 539
+    Width = 80
+    Caption = 'Save'
+    TabOrder = 6
+  end
+  object Load: TButton
+    Left = 16
+    Height = 39
+    Top = 539
+    Width = 89
+    Caption = 'Load'
+    OnClick = LoadClick
+    TabOrder = 5
+  end
+  object LoadDialog: TOpenDialog
+    left = 152
+    top = 544
+  end
+  object SaveDialog: TSaveDialog
+    left = 264
+    top = 544
+  end
+end
