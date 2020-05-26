@@ -15,4 +15,14 @@ fp.dsk
 src/tests/output/*
 
 # Lazarus project
-src/gui/*
+src/gui/backup/*
+src/gui/lib/*
+src/gui/coRvidGUI
+src/gui/coRvidGUI.ico.bak
+*.lps
+*.res
+*.lrs
+*.compiled
+*.or
+*.lrt
+*.rst
