@@ -26,6 +26,8 @@ function readSimulationDetails(const filename: string): SimulationDetails;
 
 function copySimulationDetails(const orig: SimulationDetails): SimulationDetails;
 
+function generateSeeds(): string;
+
 procedure recordSimulationDetails(const filename: string; sim: SimulationDetails);
 
 procedure writeSimulationDetails(const sim: SimulationDetails);
@@ -41,6 +43,7 @@ var
    stdout: ansistring;
    cmd: ansistring;
    flags: TReplaceFlags;
+   r, i: LongInt;
 
 { NOTE: INTERNAL FUNCTIONS AND PROCEDURES BELOW. }
 
@@ -169,6 +172,21 @@ function copySimulationDetails(const orig: SimulationDetails): SimulationDetails
       copySimulationDetails.OutputDirectory := orig.OutputDirectory;
 
    end;
+{
+   Generate a seed string.
+}
+function generateSeeds(): string;
+   begin
+      Randomize;
+      for i := 1 to 4 do
+         begin
+            r := Random(maxint);
+            generateSeeds := generateSeeds + IntToStr(r) + ' ';
+         end;
+      generateSeeds := trim(generateSeeds);
+      
+   end;
+
 {
    This procedure writes a SimulationDetails record out to an ini file.
 }
