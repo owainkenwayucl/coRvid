@@ -68,6 +68,14 @@ cp -R output output-1
 coRvid.exe uk-sim.ini
 ```
 
+### coRvidReseed.exe
+
+This program uses the FreePascal `random` function to set the four random seeds in a simulation `.ini` file between 0 and `maxint` and write the results out to a new file:
+
+```
+coRvidReseed.exe <input file> <output file>
+```
+
 ### CompareTSV.exe
 
 This application compares two TSV format files, such as the `.xls` files created by mics.  It writes the comparison file to either `CompareTSV.out` or the third argument it is passed:
