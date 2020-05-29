@@ -177,6 +177,7 @@ function copySimulationDetails(const orig: SimulationDetails): SimulationDetails
 }
 function generateSeeds(): string;
    begin
+      generateSeeds := '';
       Randomize;
       for i := 1 to 4 do
          begin
