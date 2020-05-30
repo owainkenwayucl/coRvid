@@ -49,6 +49,7 @@ type
     Run: TButton;
 
     procedure LoadClick(Sender: TObject);
+    procedure RunClick(Sender: TObject);
     procedure SaveClick(Sender: TObject);
 
   private
@@ -124,6 +125,12 @@ procedure TSimulationDetailsForm.LoadClick(Sender: TObject);
          end;
    end;
 
+procedure TSimulationDetailsForm.RunClick(Sender: TObject);
+   begin
+      SimDetails := UpdateSimDetails();
+      runSimulation(SimDetails);
+   end;
+
 procedure TSimulationDetailsForm.SaveClick(Sender: TObject);
    begin
       SimDetails := UpdateSimDetails();
@@ -134,8 +141,6 @@ procedure TSimulationDetailsForm.SaveClick(Sender: TObject);
             RecordSimulationDetails(SaveFileName, SimDetails)
          end;
    end;
-
-
 
 end.
 

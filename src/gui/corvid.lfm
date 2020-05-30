@@ -13,6 +13,7 @@ object SimulationDetailsForm: TSimulationDetailsForm
     Top = 539
     Width = 80
     Caption = 'Run'
+    OnClick = RunClick
     TabOrder = 0
   end
   object Country: TGroupBox
