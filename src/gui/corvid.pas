@@ -130,7 +130,7 @@ procedure TSimulationDetailsForm.SaveClick(Sender: TObject);
       if SaveDialog.Execute then
          begin
             SaveFileName := SaveDialog.FileName;
-            ShowMessage(SaveFileName);
+            {ShowMessage(SaveFileName);}
             RecordSimulationDetails(SaveFileName, SimDetails)
          end;
    end;
