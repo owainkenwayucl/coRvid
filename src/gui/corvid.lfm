@@ -1,16 +1,16 @@
 object SimulationDetailsForm: TSimulationDetailsForm
   Left = 361
-  Height = 598
+  Height = 641
   Top = 168
   Width = 637
   Caption = 'Simulation Details'
-  ClientHeight = 598
+  ClientHeight = 641
   ClientWidth = 637
   LCLVersion = '1.8.2.0'
   object Run: TButton
-    Left = 544
+    Left = 545
     Height = 39
-    Top = 539
+    Top = 587
     Width = 80
     Caption = 'Run'
     OnClick = RunClick
@@ -150,11 +150,11 @@ object SimulationDetailsForm: TSimulationDetailsForm
   end
   object Simulation: TGroupBox
     Left = 8
-    Height = 136
+    Height = 176
     Top = 320
     Width = 616
     Caption = 'Simulation'
-    ClientHeight = 118
+    ClientHeight = 158
     ClientWidth = 614
     TabOrder = 3
     object Binary: TEdit
@@ -175,22 +175,22 @@ object SimulationDetailsForm: TSimulationDetailsForm
       Text = '1'
     end
     object Seeds: TEdit
-      Left = 89
+      Left = 87
       Height = 29
-      Top = 80
-      Width = 255
+      Top = 120
+      Width = 471
       TabOrder = 2
       Text = '98798150 729101 17389101 4797132'
     end
     object RunDetails: TGroupBox
-      Left = 352
+      Left = 392
       Height = 98
-      Top = 10
-      Width = 245
+      Top = 8
+      Width = 208
       Caption = 'RunDetails'
       ClientHeight = 80
-      ClientWidth = 243
-      TabOrder = 3
+      ClientWidth = 206
+      TabOrder = 4
       object InitialSimulation: TRadioButton
         Left = 11
         Height = 23
@@ -213,7 +213,7 @@ object SimulationDetailsForm: TSimulationDetailsForm
         Left = 144
         Height = 29
         Top = 45
-        Width = 80
+        Width = 48
         TabOrder = 2
         Text = '0'
       end
@@ -229,7 +229,7 @@ object SimulationDetailsForm: TSimulationDetailsForm
     object Label10: TLabel
       Left = 23
       Height = 17
-      Top = 40
+      Top = 48
       Width = 58
       Caption = 'Threads:'
       ParentColor = False
@@ -237,16 +237,25 @@ object SimulationDetailsForm: TSimulationDetailsForm
     object Label11: TLabel
       Left = 37
       Height = 17
-      Top = 80
+      Top = 122
       Width = 44
       Caption = 'Seeds:'
       ParentColor = False
     end
+    object Reseed: TButton
+      Left = 567
+      Height = 27
+      Top = 122
+      Width = 33
+      Caption = '...'
+      OnClick = ReseedClick
+      TabOrder = 3
+    end
   end
   object Output: TGroupBox
-    Left = 8
+    Left = 9
     Height = 67
-    Top = 456
+    Top = 504
     Width = 615
     Caption = 'Output'
     ClientHeight = 49
@@ -270,18 +279,18 @@ object SimulationDetailsForm: TSimulationDetailsForm
     end
   end
   object Save: TButton
-    Left = 456
+    Left = 457
     Height = 39
-    Top = 539
+    Top = 587
     Width = 80
     Caption = 'Save'
     OnClick = SaveClick
     TabOrder = 6
   end
   object Load: TButton
-    Left = 16
+    Left = 9
     Height = 39
-    Top = 539
+    Top = 587
     Width = 89
     Caption = 'Load'
     OnClick = LoadClick
@@ -289,10 +298,10 @@ object SimulationDetailsForm: TSimulationDetailsForm
   end
   object LoadDialog: TOpenDialog
     left = 152
-    top = 544
+    top = 584
   end
   object SaveDialog: TSaveDialog
     left = 264
-    top = 544
+    top = 584
   end
 end

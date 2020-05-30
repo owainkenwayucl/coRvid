@@ -14,6 +14,7 @@ type
   TSimulationDetailsForm = class(TForm)
     AdminDir: TEdit;
     Binary: TEdit;
+    Reseed: TButton;
     ControlRoots: TEdit;
     Label10: TLabel;
     Label11: TLabel;
@@ -49,6 +50,7 @@ type
     Run: TButton;
 
     procedure LoadClick(Sender: TObject);
+    procedure ReseedClick(Sender: TObject);
     procedure RunClick(Sender: TObject);
     procedure SaveClick(Sender: TObject);
 
@@ -123,6 +125,11 @@ procedure TSimulationDetailsForm.LoadClick(Sender: TObject);
             SimDetails := readSimulationDetails(LoadFileName);
             UpdateForm(SimDetails);
          end;
+   end;
+
+procedure TSimulationDetailsForm.ReseedClick(Sender: TObject);
+   begin
+      SimulationDetailsForm.Seeds.Text := generateSeeds();
    end;
 
 procedure TSimulationDetailsForm.RunClick(Sender: TObject);
