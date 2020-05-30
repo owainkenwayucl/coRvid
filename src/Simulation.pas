@@ -44,6 +44,7 @@ var
    cmd: ansistring;
    flags: TReplaceFlags;
    r, i: LongInt;
+   seeded : boolean = FALSE;
 
 { NOTE: INTERNAL FUNCTIONS AND PROCEDURES BELOW. }
 
@@ -178,7 +179,11 @@ function copySimulationDetails(const orig: SimulationDetails): SimulationDetails
 function generateSeeds(): string;
    begin
       generateSeeds := '';
-      Randomize;
+      if not seeded then
+         begin
+            seeded := TRUE;
+            Randomize;
+         end;
       for i := 1 to 4 do
          begin
             r := Random(maxint);
