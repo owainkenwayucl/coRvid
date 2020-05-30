@@ -274,6 +274,7 @@ object SimulationDetailsForm: TSimulationDetailsForm
     Top = 539
     Width = 80
     Caption = 'Save'
+    OnClick = SaveClick
     TabOrder = 6
   end
   object Load: TButton

@@ -49,6 +49,7 @@ type
     Run: TButton;
 
     procedure LoadClick(Sender: TObject);
+    procedure SaveClick(Sender: TObject);
 
   private
 
@@ -58,7 +59,7 @@ type
 
 var
   SimulationDetailsForm: TSimulationDetailsForm;
-  LoadFileName: string;
+  LoadFileName, SaveFileName: string;
   SimDetails: SimulationDetails;
 
 implementation
@@ -94,6 +95,24 @@ procedure UpdateForm(s: SimulationDetails);
          end;
    end;
 
+function UpdateSimDetails(): SimulationDetails;
+   begin
+      UpdateSimDetails.Country.LongName := SimulationDetailsForm.LongName.text;
+      UpdateSimDetails.Country.ShortName := LowerCase(SimulationDetailsForm.ShortName.text);
+
+      UpdateSimDetails.R := StrToFloat(SimulationDetailsForm.R.text);
+      UpdateSimDetails.AdminDirectory := SimulationDetailsForm.AdminDir.text;
+      UpdateSimDetails.ParameterDirectory := SimulationDetailsForm.ParamDir.text;
+      UpdateSimDetails.PopulationsDirectory := SimulationDetailsForm.PopulationDir.text;
+      UpdateSimDetails.ControlRoots := SimulationDetailsForm.ControlRoots.text;
+
+      UpdateSimDetails.Binary := SimulationDetailsForm.Binary.text;
+      UpdateSimDetails.Threads := StrToInt(SimulationDetailsForm.Threads.text);
+      UpdateSimDetails.Seeds := SimulationDetailsForm.Seeds.text;
+      UpdateSimDetails.Run := StrToInt(SimulationDetailsForm.RunNumVal.text);
+
+   end;
+
 procedure TSimulationDetailsForm.LoadClick(Sender: TObject);
    begin
       if LoadDialog.Execute then
@@ -102,6 +121,17 @@ procedure TSimulationDetailsForm.LoadClick(Sender: TObject);
             {ShowMessage(LoadFileName);}
             SimDetails := readSimulationDetails(LoadFileName);
             UpdateForm(SimDetails);
+         end;
+   end;
+
+procedure TSimulationDetailsForm.SaveClick(Sender: TObject);
+   begin
+      SimDetails := UpdateSimDetails();
+      if SaveDialog.Execute then
+         begin
+            SaveFileName := SaveDialog.FileName;
+            ShowMessage(SaveFileName);
+            RecordSimulationDetails(SaveFileName, SimDetails)
          end;
    end;
 
