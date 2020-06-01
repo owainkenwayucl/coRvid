@@ -44,7 +44,7 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="coRvidGUI"/>
+      <Filename Value="coRvidGUI.exe"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

@@ -93,3 +93,8 @@ The output file is also in TSV format, with cells that contain:
 | ¬= strings | cell 1 << >> cell 2 |
 
 In addition, it returns 0 if the files match, 1 if they don't to make it scriptable.
+
+### `src/gui/coRvidGUI.exe`
+
+There is a very alpha level GUI for editing (and directly launching) `.ini` files in `src/gui`. This can be built with Lazarus.
+
