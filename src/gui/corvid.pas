@@ -107,6 +107,7 @@ function UpdateSimDetails(): SimulationDetails;
       UpdateSimDetails.AdminDirectory := SimulationDetailsForm.AdminDir.text;
       UpdateSimDetails.ParameterDirectory := SimulationDetailsForm.ParamDir.text;
       UpdateSimDetails.PopulationsDirectory := SimulationDetailsForm.PopulationDir.text;
+      UpdateSimDetails.OutputDirectory := SimulationDetailsForm.OutputDir.text;
       UpdateSimDetails.ControlRoots := SimulationDetailsForm.ControlRoots.text;
 
       UpdateSimDetails.Binary := SimulationDetailsForm.Binary.text;
