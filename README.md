@@ -96,6 +96,6 @@ In addition, it returns 0 if the files match, 1 if they don't to make it scripta
 
 ### `src/gui/coRvidGUI.exe`
 
-There is a very alpha level GUI for editing (and directly launching) `.ini` files in `src/gui`. This can be built with Lazarus.
+There is a very alpha level GUI for editing (and directly launching) `.ini` files in `src/gui`. This can be built with Lazarus, and is *not* built as part of the rest of the tools above.
 
 ![Screenshot of GUI](images/coRvidGUI-screenshot.png)
