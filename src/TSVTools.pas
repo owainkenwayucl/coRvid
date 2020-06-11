@@ -82,7 +82,7 @@ function readTSV(const filename: string): TList;
             readTSV.Add(tempSplit);
          end;
 
-      tempTlist.Free;
+      tempTlist.Free; { Tidy. }
    end;
 
 {
@@ -92,57 +92,60 @@ function readTSV(const filename: string): TList;
   string or a string comparison if not.
 
   It returns TRUE if the files are identical, FALSE if not.
-
 }
 function compareTSV(const file1, file2, outputfile: string): boolean;
    begin
       compareTSV := TRUE;
-      resultList := TStringList.Create;
+      resultList := TStringList.Create; { List for output TSV. }
       list1 := readTSV(file1);
       list2 := readTSV(file2);
 
-      maxh := max(list1.Count, list2.count);
+      maxh := max(list1.Count, list2.count); { Get max number of lines. }
 
-      for i := 0 to maxh -1 do
+      for i := 0 to maxh -1 do { Loop over lines }
          begin
-            tempTlist := TStringList.Create;
-            tempTlist2 := TStringList.Create;
-            tempSplit := TStringList.Create;
+            tempTlist := TStringList.Create;  { Temp List -> Line from file 1 }
+            tempTlist2 := TStringList.Create; { Temp List -> Line from file 2 }
+            tempSplit := TStringList.Create;  { Temp List -> Output Line }
             tempSplit.Delimiter := #9;
             tempSplit.StrictDelimiter := TRUE;
 
+            { If there is a line left in either file, select it, else blank }
             if i < list1.Count then
                tempTlist := TStringList(list1[i]);
 
             if i < list2.Count then
                tempTlist2 := TStringList(list2[i]);
 
-            maxw := max(tempTlist.Count, tempTlist2.Count);
+            maxw := max(tempTlist.Count, tempTlist2.Count); { Max line length. }
 
-            for j := 0 to maxw -1 do
+            for j := 0 to maxw -1 do { Loop over columns }
                begin
                   tstr1 := ' ';
                   tstr2 := ' ';
 
+                  { If there is a cell left in each line, select it else blank }
                   if j < tempTlist.Count then
                      tstr1 := tempTlist[j];
 
                   if j < tempTlist2.Count then
                      tstr2 := tempTlist2[j];
 
-                  if not (tstr1 = tstr2) then
-                     compareTSV := FALSE;
+                  if not (tstr1 = tstr2) then { If string comparison fails }
+                     compareTSV := FALSE;     { entire function -> FALSE. }
 
+                  { Run our numerical comparison function against this cell. }
                   resultstr := numericCompare(tstr1, tstr2);
-                  tempSplit.Add(resultstr);
+                  tempSplit.Add(resultstr);   { Add to line in progress. }
 
                end;
 
-            resultList.Add(tempSplit.DelimitedText);
+            resultList.Add(tempSplit.DelimitedText); { Add line to output list }
          end;
 
-      resultList.SaveToFile(outputfile);
-      resultList.Free;
+      resultList.SaveToFile(outputfile); { Write out to file. }
+
+      resultList.Free; { Tidy. }
       list2.Free;
       list1.Free;
    end;
