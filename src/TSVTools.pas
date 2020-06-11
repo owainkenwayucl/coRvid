@@ -1,3 +1,8 @@
+{
+  This unit contains routines for reading and comparing TSV (tab separated) 
+  files.  This is useful because the MRC-IDE Covid 19 Spatial Sim outputs
+  TSV files (but calls them .xls).
+}
 unit TSVTools;
 
 interface
@@ -57,15 +62,20 @@ function numericCompare(const str1, str2: string): string;
 
 
 { External functions + procedures }
+
+{
+  Read in a TSV file and generate a List of Lists where each sublist is a line
+  in the file, and each item is a cell.
+}
 function readTSV(const filename: string): TList;
    begin
       readTSV := TList.Create;
-      tempTlist := TStringList.Create;
-      tempTlist.LoadFromFile(filename);
+      tempTlist := TStringList.Create;  { Temporary list to load lines as }
+      tempTlist.LoadFromFile(filename); { strings into. }
 
-      for i := 0 to tempTlist.Count -1 do
-         begin
-            tempSplit := TStringList.Create;
+      for i := 0 to tempTlist.Count -1 do    { Loop over each string line and }
+         begin                               { split it on tabs into a List }
+            tempSplit := TStringList.Create; { and add to the return List. }
             tempSplit.Delimiter := #9;
             tempSplit.StrictDelimiter := TRUE;
             tempSplit.DelimitedText := tempTlist[i];
@@ -75,6 +85,15 @@ function readTSV(const filename: string): TList;
       tempTlist.Free;
    end;
 
+{
+  Compare two TSV files using the routines declared above.  This should write 
+  out a TSV file where each cell contains numerical difference between the
+  two original files in the case of the contents being a number, or either the
+  string or a string comparison if not.
+
+  It returns TRUE if the files are identical, FALSE if not.
+
+}
 function compareTSV(const file1, file2, outputfile: string): boolean;
    begin
       compareTSV := TRUE;
